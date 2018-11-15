@@ -78,6 +78,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetWSDLOperationsRequest }
+     * 
+     */
+    public GetWSDLOperationsRequest createGetWSDLOperationsRequest() {
+        return new GetWSDLOperationsRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetWSDLOperationsResponse }
+     * 
+     */
+    public GetWSDLOperationsResponse createGetWSDLOperationsResponse() {
+        return new GetWSDLOperationsResponse();
+    }
+
+    /**
      * Create an instance of {@link WSDLParserFaultDetails }
      * 
      */

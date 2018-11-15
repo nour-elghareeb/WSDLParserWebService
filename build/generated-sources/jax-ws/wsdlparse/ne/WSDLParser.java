@@ -68,4 +68,19 @@ public interface WSDLParser {
         throws WSDLParserFault
     ;
 
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns wsdlparse.ne.GetWSDLOperationsResponse
+     * @throws WSDLParserFault
+     */
+    @WebMethod(operationName = "GetWSDLOperations", action = "ne.wsdlparse/GetWSDLOperations")
+    @WebResult(name = "GetWSDLOperationsResponse", targetNamespace = "ne.wsdlparse", partName = "parameters")
+    public GetWSDLOperationsResponse getWSDLOperations(
+        @WebParam(name = "GetWSDLOperationsRequest", targetNamespace = "ne.wsdlparse", partName = "parameters")
+        GetWSDLOperationsRequest parameters)
+        throws WSDLParserFault
+    ;
+
 }

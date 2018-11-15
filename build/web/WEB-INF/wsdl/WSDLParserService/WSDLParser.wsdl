@@ -20,8 +20,7 @@
     </wsdl:message>
     <wsdl:message name="GetAvailableWSDLsResponse">
         <wsdl:part element="tns:GetAvailableWSDLsResponse" name="parameters" />
-    </wsdl:message>
-    
+    </wsdl:message>    
     <wsdl:message name="GetWSDLPortsRequest">
         <wsdl:part element="tns:GetWSDLPortsRequest" name="parameters" />
     </wsdl:message>
@@ -29,6 +28,12 @@
         <wsdl:part element="tns:GetWSDLPortsResponse" name="parameters" />
     </wsdl:message>
     
+    <wsdl:message name="GetWSDLOperationsRequest">
+        <wsdl:part element="tns:GetWSDLOperationsRequest" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetWSDLOperationsResponse">
+        <wsdl:part element="tns:GetWSDLOperationsResponse" name="parameters" />
+    </wsdl:message>
     <wsdl:message name="WSDLParserFault">
         <wsdl:part name="parameters" element="tns:WSDLParserFaultDetails"></wsdl:part>
     </wsdl:message>
@@ -46,6 +51,11 @@
         <wsdl:operation name="GetWSDLPorts">
             <wsdl:input message="tns:GetWSDLPortsRequest" name="GetWSDLPortsRequest"/>
             <wsdl:output message="tns:GetWSDLPortsResponse" name="GetWSDLPortsResponse" />
+            <wsdl:fault message="tns:WSDLParserFault" name="WSDLParserFault"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetWSDLOperations">
+            <wsdl:input message="tns:GetWSDLOperationsRequest" name="GetWSDLOperationsRequest"/>
+            <wsdl:output message="tns:GetWSDLOperationsResponse" name="GetWSDLOperationsResponse" />
             <wsdl:fault message="tns:WSDLParserFault" name="WSDLParserFault"></wsdl:fault>
         </wsdl:operation>
     </wsdl:portType>
@@ -81,6 +91,19 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="GetWSDLPortsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="WSDLParserFault">
+                <soap:fault name="WSDLParserFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="GetWSDLOperations">
+            <soap:operation soapAction="ne.wsdlparse/GetWSDLOperations"/>
+            <wsdl:input name="GetWSDLOperationsRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetWSDLOperationsResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="WSDLParserFault">

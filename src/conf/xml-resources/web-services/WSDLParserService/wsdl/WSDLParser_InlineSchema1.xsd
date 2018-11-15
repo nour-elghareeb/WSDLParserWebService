@@ -49,6 +49,22 @@
         </xsd:complexType>
     </xsd:element>
     
+    <xsd:element ibmSchExtn:docRoot="true" name="GetWSDLOperationsRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="WSDLName" type="xsd:string" maxOccurs="1" minOccurs="1" />
+                <xsd:element name="WSDLPortName" type="xsd:string" maxOccurs="1" minOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element ibmSchExtn:docRoot="true" name="GetWSDLOperationsResponse">
+        <xsd:complexType>
+            <xsd:sequence>          	
+                <xsd:element name="WSDLOperationName" type="xsd:string" maxOccurs="unbounded" minOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    
     <xsd:element name="WSDLParserFaultDetails">
         <xsd:complexType>
             <xsd:sequence>
