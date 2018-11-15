@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="WSDLParser" 
+	targetNamespace="ne.wsdlparse"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="ne.wsdlparse"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    >
+    <wsdl:types>
+
+        <xsd:schema targetNamespace="ne.wsdlparse" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+           <xsd:include schemaLocation="WSDLParser_InlineSchema1.xsd"></xsd:include>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="FileUploadRequest">
+        <wsdl:part element="tns:UploadFileRequest" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="FileUploadResponse">
+        <wsdl:part element="tns:UploadFileResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="FileUploadFault">
+        <wsdl:part name="parameters" element="tns:UploadFileFault"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="WSDLParser">
+        <wsdl:operation name="FileUpload">
+            <wsdl:input message="tns:FileUploadRequest" name="FileUploadRequest"/>
+            <wsdl:output message="tns:FileUploadResponse" name="FileUploadResponse" />
+            <wsdl:fault message="tns:FileUploadFault" name="FileUploadFault"></wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="WSDLParserSOAP" type="tns:WSDLParser">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="FileUpload">
+            <soap:operation soapAction="ne.wsdlparse/FileUpload"/>
+            <wsdl:input name="FileUploadRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="FileUploadResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="FileUploadFault">
+                <soap:fault name="FileUploadFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="WSDLParser">
+        <wsdl:port binding="tns:WSDLParserSOAP" name="WSDLParserSOAP">
+            <soap:address location="http://localhsot:8000"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

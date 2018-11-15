@@ -1,0 +1,15 @@
+dused = 7;
+bwused  = 27
+
+dayprice = float(260 / 30 = 8.666)
+gbprice = 260 / 200 = 1.3
+
+normalBwPerDay = 200 / 30 = 6.6667
+
+xx = (bwUsed - normalBwPerDay*dused) * gbPrice
+if xx < 0:
+    xx = 0
+eq = dused * dayprice + xx;
+
+
+print (eq)
