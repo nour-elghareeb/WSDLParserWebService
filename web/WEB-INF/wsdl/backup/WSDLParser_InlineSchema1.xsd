@@ -16,11 +16,12 @@
         <xsd:complexType>
           <xsd:sequence>
           	<xsd:element name="Status" type="xsd:boolean"/>
-          	<xsd:element name="Message" type="xsd:string"/>
+          	<xsd:element name="WSDLName" type="xsd:string"/>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
-      <xsd:element name="UploadFileFault">
+     
+      <xsd:element name="WSDLParserFaultDetails">
       	<xsd:complexType>
       		<xsd:sequence>
       			<xsd:element name="ErrorCode" type="xsd:int">

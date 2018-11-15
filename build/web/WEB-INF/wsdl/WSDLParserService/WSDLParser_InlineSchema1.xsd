@@ -1,33 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="ne.wsdlparse" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="ne.wsdlparser" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-      <xsd:element ibmSchExtn:docRoot="true" name="UploadFileRequest">
+    <xsd:element ibmSchExtn:docRoot="true" name="UploadFileRequest" xmlns:tns="ne.wsdlparse">
         <xsd:complexType>
-          <xsd:sequence>
-          	<xsd:element name="FileName" type="xsd:string" maxOccurs="1" minOccurs="1"/>
-          	<xsd:element name="FileExtension" type="xsd:string" maxOccurs="1" minOccurs="1"/>
-          	<xsd:element name="MimeType" type="xsd:string" maxOccurs="1" minOccurs="1"/>
-          	<xsd:element name="FileContents" type="xsd:base64Binary" maxOccurs="1" minOccurs="1">
-          	</xsd:element>
-          	<xsd:element name="FileSize" type="xsd:double" maxOccurs="1" minOccurs="1"/>
-          	<xsd:element name="Overwrite" type="xsd:boolean" maxOccurs="1" minOccurs="1" default="false"/>
-          </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="FileName" type="xsd:string" maxOccurs="1" minOccurs="1"/>
+                <xsd:element name="FileExtension" type="xsd:string" maxOccurs="1" minOccurs="1"/>
+                <xsd:element name="MimeType" type="xsd:string" maxOccurs="1" minOccurs="1"/>
+                <xsd:element name="FileContents" type="xsd:base64Binary" maxOccurs="1" minOccurs="1">
+                </xsd:element>
+                <xsd:element name="FileSize" type="xsd:double" maxOccurs="1" minOccurs="1"/>
+                <xsd:element name="Overwrite" type="xsd:boolean" maxOccurs="1" minOccurs="1" default="false"/>
+            </xsd:sequence>
         </xsd:complexType>
-      </xsd:element>
-      <xsd:element ibmSchExtn:docRoot="true" name="UploadFileResponse">
+    </xsd:element>
+    <xsd:element ibmSchExtn:docRoot="true" name="UploadFileResponse">
         <xsd:complexType>
-          <xsd:sequence>
-          	<xsd:element name="Status" type="xsd:boolean"/>
-          	<xsd:element name="WSDLName" type="xsd:string"/>
-          </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="Status" type="xsd:boolean"/>
+                <xsd:element name="WSDLName" type="xsd:string"/>
+            </xsd:sequence>
         </xsd:complexType>
-      </xsd:element>
-     
-      <xsd:element name="WSDLParserFaultDetails">
-      	<xsd:complexType>
-      		<xsd:sequence>
-      			<xsd:element name="ErrorCode" type="xsd:int">
-      			</xsd:element>
-      			<xsd:element name="ErrorMessage" type="xsd:string"/>
-      		</xsd:sequence>
-      	</xsd:complexType>
-      </xsd:element>
-    </xsd:schema>
+    </xsd:element>
+    <xsd:element ibmSchExtn:docRoot="true" name="GetAvailableWSDLsRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element ibmSchExtn:docRoot="true" name="GetAvailableWSDLsResponse">
+        <xsd:complexType>
+            <xsd:sequence>          	
+                <xsd:element name="WSDLItem" type="xsd:string" maxOccurs="unbounded" minOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element ibmSchExtn:docRoot="true" name="GetWSDLPortsRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="WSDLName" type="xsd:string" maxOccurs="1" minOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element ibmSchExtn:docRoot="true" name="GetWSDLPortsResponse">
+        <xsd:complexType>
+            <xsd:sequence>          	
+                <xsd:element name="WSDLPortItem" type="xsd:string" maxOccurs="unbounded" minOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="WSDLParserFaultDetails">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ErrorCode" type="xsd:int">
+                </xsd:element>
+                <xsd:element name="ErrorMessage" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

@@ -30,6 +30,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import ne.wsdlparse.lib.Utils;
+import ne.wsdlparse.lib.exception.WSDLException;
+import ne.wsdlparse.lib.exception.WSDLExceptionCode;
 
 public class XSDFile {
     Document xsd;
@@ -46,7 +48,7 @@ public class XSDFile {
     private Boolean isRootModified = false;
 
     public XSDFile(String filePath, String namespace) throws FileNotFoundException, SAXException, IOException,
-            ParserConfigurationException, XPathExpressionException {
+            ParserConfigurationException, XPathExpressionException, WSDLException {
         if (Utils.validateURI(filePath)) {
 
             String dir = System.getProperty("java.io.tmpdir");
@@ -72,15 +74,20 @@ public class XSDFile {
 
         this.filePath = filePath;
         this.targetNS = namespace;
-        File file = new File(filePath);
-        this.workingdir = file.getParent();
-        this.xsd = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new FileInputStream(file));
+        
+        try{
+            File file = new File(filePath);
+            this.workingdir = file.getParent();
+            this.xsd = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new FileInputStream(file));
+        }catch(FileNotFoundException e){
+            throw new WSDLException(WSDLExceptionCode.XSD_SCHEMA_FILE_NOT_FOUND, "Schema file "+filePath + " not found!");
+        }
         this.load(filePath);
 
     }
 
     public XSDFile(String workingdir, NodeList schema)
-            throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
+            throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, FileNotFoundException, WSDLException {
         this.workingdir = workingdir;
 
         this.xsd = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
@@ -97,7 +104,7 @@ public class XSDFile {
     }
 
     private void _import(String filePath, String namespace) throws FileNotFoundException, XPathExpressionException,
-            SAXException, IOException, ParserConfigurationException {
+            SAXException, IOException, ParserConfigurationException, WSDLException {
         if (Utils.validateURI(filePath)) {
             this.imports.add(new XSDFile(filePath, namespace));
         } else {
@@ -107,7 +114,7 @@ public class XSDFile {
     }
 
     private void include(String filePath) throws FileNotFoundException, SAXException, IOException,
-            ParserConfigurationException, XPathExpressionException {
+            ParserConfigurationException, XPathExpressionException, WSDLException {
         if (Utils.validateURI(filePath)) {
             this.includes.add(new XSDFile(filePath, this.targetNS));
         } else {
@@ -117,7 +124,7 @@ public class XSDFile {
     }
 
     private void load(String filePath) throws FileNotFoundException, SAXException, IOException,
-            ParserConfigurationException, XPathExpressionException {
+            ParserConfigurationException, XPathExpressionException, WSDLException {
 
         this.xPath = XPathFactory.newInstance().newXPath();
         this.loadNamespaces();

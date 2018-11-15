@@ -6,7 +6,9 @@
 package ne.wsdlparse.service.lib;
 
 import javax.jws.WebService;
+import ne.wsdlparse.service.handler.GetWSDLPortsHandler;
 import ne.wsdlparse.service.handler.UploadFileHandler;
+import wsdlparse.ne.GetWSDLPortsResponse;
 import wsdlparse.ne.WSDLParserFault;
 
 /**
@@ -19,6 +21,17 @@ public class WSDLParserService {
     public wsdlparse.ne.UploadFileResponse uploadFile(wsdlparse.ne.UploadFileRequest parameters) throws WSDLParserFault {
         //TODO implement this method
         UploadFileHandler handler = new UploadFileHandler();
+        return handler.handle(parameters);
+    }
+
+    public wsdlparse.ne.GetAvailableWSDLsResponse getAvailableWSDLs(wsdlparse.ne.GetAvailableWSDLsRequest parameters) throws WSDLParserFault {
+        //TODO implement this method
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
+
+    public wsdlparse.ne.GetWSDLPortsResponse getWSDLPorts(wsdlparse.ne.GetWSDLPortsRequest parameters) throws WSDLParserFault {
+        //TODO implement this method
+        GetWSDLPortsHandler handler = new GetWSDLPortsHandler();
         return handler.handle(parameters);
     }
     

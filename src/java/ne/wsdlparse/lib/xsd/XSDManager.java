@@ -1,5 +1,6 @@
 package ne.wsdlparse.lib.xsd;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.namespace.QName;
@@ -11,6 +12,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import ne.wsdlparse.lib.WSDLManagerRetrieval;
+import ne.wsdlparse.lib.exception.WSDLException;
 
 public class XSDManager {
     private WSDLManagerRetrieval wsdlManager;
@@ -21,7 +23,7 @@ public class XSDManager {
     private XSDFile xsd;
 
     public XSDManager(WSDLManagerRetrieval wsdlManager, String workingdir, NodeList schemas)
-            throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
+            throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, FileNotFoundException, WSDLException {
         this.workingdir = workingdir;
         // this.targetNS = Utils.getAttrValueFromNode(schemas, "targetNamespace");
 

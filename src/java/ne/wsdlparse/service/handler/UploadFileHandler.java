@@ -15,7 +15,6 @@ import ne.utility.CompressionUtils;
 import ne.utility.FileUtils;
 import ne.wsdlparse.service.lib.WSDLParserService;
 
-
 import wsdlparse.ne.UploadFileRequest;
 import wsdlparse.ne.UploadFileResponse;
 import wsdlparse.ne.WSDLParserFault;
@@ -25,34 +24,31 @@ import wsdlparse.ne.WSDLParserFaultDetails;
  *
  * @author nour
  */
-public class UploadFileHandler implements ServiceHandler<UploadFileRequest, UploadFileResponse> {
-
-    private final static String WORKING_DIR = "/usr/share/wsdlparser/files";
-    private final static String TEMP_DIR = "/usr/share/wsdlparser/tmp";
+public class UploadFileHandler extends ServiceHandler<UploadFileRequest, UploadFileResponse> {
 
     private final static File EXTRACTING_DIR = new File(TEMP_DIR, "extracted");
 
     @Override
-    public UploadFileResponse handle(UploadFileRequest request) throws WSDLParserFault{
+    public UploadFileResponse handle(UploadFileRequest request) throws WSDLParserFault {
+        try {
+            UploadFileResponse response = new UploadFileResponse();
+            if (request.getMimeType()
+                    .equals("application/zip")) {
 
-        if (request.getMimeType()
-                .equals("application/zip")) {
-            try {
                 String filename = request.getFileName() + "." + request.getFileExtension();
-                String filePath = TEMP_DIR + File.separator + "compressed.zip";
-                OutputStream stream = new FileOutputStream(filePath);
+                File compressedFile = new File(TEMP_DIR, "compressed.zip");
+                OutputStream stream = new FileOutputStream(compressedFile);
                 stream.write(request.getFileContents());
                 stream.close();
                 if (!EXTRACTING_DIR.exists()) {
                     EXTRACTING_DIR.mkdir();
                 }
-                File zippedFile = new File(filePath);
-                zippedFile.deleteOnExit();
-                if (!CompressionUtils.Unzip(zippedFile, EXTRACTING_DIR, true)) {
+                compressedFile.deleteOnExit();
+                if (!CompressionUtils.Unzip(compressedFile, EXTRACTING_DIR, true)) {
                     throw handleFault(1001, "Error Unzipping file.");
                 }
 
-                File fileToBeStored = new File(WORKING_DIR + File.separator + request.getFileName());
+                File fileToBeStored = new File(WORKING_DIR, request.getFileName());
                 if (fileToBeStored.exists() && !request.isOverwrite()) {
                     throw handleFault(1002, "A wsdl with same name already exists. Set overwrite option to true to replace.");
                 } else if (fileToBeStored.exists() && request.isOverwrite()) {
@@ -61,32 +57,32 @@ public class UploadFileHandler implements ServiceHandler<UploadFileRequest, Uplo
                 if (!EXTRACTING_DIR.renameTo(fileToBeStored)) {
                     throw handleFault(1003, "Error moving file");
                 }
-
-                UploadFileResponse response = new UploadFileResponse();
                 response.setWSDLName(request.getFileName());
                 response.setStatus(true);
                 return response;
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(WSDLParserService.class.getName()).log(Level.SEVERE, null, ex);                
-                throw handleFault(9999, "Error decoding uploaded file!");
-            } catch (Exception e) {
-                Logger.getLogger(WSDLParserService.class.getName()).log(Level.SEVERE, null, e);
-                throw handleFault(9999, e.getMessage());
-            } finally {
-                EXTRACTING_DIR.delete();
+
+            } else if (request.getMimeType().equals("text/xml")) {
+                File wsdlDir = new File(WORKING_DIR, request.getFileName());
+                File wsdlFile = new File(wsdlDir, request.getFileName() + "." + request.getFileExtension());
+                OutputStream stream = new FileOutputStream(wsdlFile);
+                stream.write(request.getFileContents());
+                stream.close();
+                
+                response.setWSDLName(request.getFileName());
+                response.setStatus(true);
+                
             }
+            return response;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(WSDLParserService.class.getName()).log(Level.SEVERE, null, ex);
+            throw handleFault(9999, "Error decoding uploaded file!");
+        } catch (Exception e) {
+            Logger.getLogger(WSDLParserService.class.getName()).log(Level.SEVERE, null, e);
+            throw handleFault(9999, e.getMessage());
+        } finally {
+            EXTRACTING_DIR.delete();
         }
-        throw handleFault(9999, "Unexpected error occrred!");       
+        
     }
-
-    @Override
-    public WSDLParserFault handleFault(int code, String message) {
-        WSDLParserFault fault = new WSDLParserFault(message, new WSDLParserFaultDetails());
-        fault.getFaultInfo().setErrorCode(code);
-        fault.getFaultInfo().setErrorMessage(message);
-        return fault;
-    }
-
-    
 
 }

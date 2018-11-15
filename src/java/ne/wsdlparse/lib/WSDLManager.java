@@ -26,6 +26,7 @@ import org.xml.sax.SAXException;
 
 import ne.wsdlparse.lib.esql.ESQLBlock;
 import ne.wsdlparse.lib.esql.ESQLManager;
+import ne.wsdlparse.lib.exception.WSDLException;
 import ne.wsdlparse.lib.xsd.XSDManager;
 
 public class WSDLManager implements WSDLManagerRetrieval {
@@ -40,12 +41,15 @@ public class WSDLManager implements WSDLManagerRetrieval {
     private XSDManager xsdManager;
     private ESQLManager esqlManager = new ESQLManager(this);
 
-    public WSDLManager(String path) {
+    public WSDLManager(String path) throws WSDLException{
 
         try {
             this.namespaces.put("wsdl", "http://schemas.xmlsoap.org/wsdl/");
             this.namespaces.put("soapenv", "http://schemas.xmlsoap.org/soap/envelope/");
             this.load(path);
+        
+        } catch (WSDLException ex) {
+            throw ex;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -88,7 +92,7 @@ public class WSDLManager implements WSDLManagerRetrieval {
     }
 
     private void load(String path) throws FileNotFoundException, SAXException, IOException,
-            ParserConfigurationException, ClassNotFoundException, XPathException {
+            ParserConfigurationException, ClassNotFoundException, XPathException, XPathExpressionException, WSDLException {
         File file = new File(path);
         this.workingdir = file.getParent();
         this.wsdl = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new FileInputStream(file));
@@ -101,7 +105,7 @@ public class WSDLManager implements WSDLManagerRetrieval {
     }
 
     private boolean loadSchema()
-            throws XPathExpressionException, SAXException, IOException, ParserConfigurationException {
+            throws XPathExpressionException, SAXException, IOException, ParserConfigurationException, FileNotFoundException, WSDLException {
 
         NodeList types = (NodeList) this.xPath.compile("/definitions/types/schema").evaluate(this.wsdl,
                 XPathConstants.NODESET);

@@ -46,6 +46,38 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetAvailableWSDLsRequest }
+     * 
+     */
+    public GetAvailableWSDLsRequest createGetAvailableWSDLsRequest() {
+        return new GetAvailableWSDLsRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetAvailableWSDLsResponse }
+     * 
+     */
+    public GetAvailableWSDLsResponse createGetAvailableWSDLsResponse() {
+        return new GetAvailableWSDLsResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetWSDLPortsRequest }
+     * 
+     */
+    public GetWSDLPortsRequest createGetWSDLPortsRequest() {
+        return new GetWSDLPortsRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetWSDLPortsResponse }
+     * 
+     */
+    public GetWSDLPortsResponse createGetWSDLPortsResponse() {
+        return new GetWSDLPortsResponse();
+    }
+
+    /**
      * Create an instance of {@link WSDLParserFaultDetails }
      * 
      */

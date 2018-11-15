@@ -38,4 +38,34 @@ public interface WSDLParser {
         throws WSDLParserFault
     ;
 
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns wsdlparse.ne.GetAvailableWSDLsResponse
+     * @throws WSDLParserFault
+     */
+    @WebMethod(operationName = "GetAvailableWSDLs", action = "ne.wsdlparse/GetAvailableWSDLs")
+    @WebResult(name = "GetAvailableWSDLsResponse", targetNamespace = "ne.wsdlparse", partName = "parameters")
+    public GetAvailableWSDLsResponse getAvailableWSDLs(
+        @WebParam(name = "GetAvailableWSDLsRequest", targetNamespace = "ne.wsdlparse", partName = "parameters")
+        GetAvailableWSDLsRequest parameters)
+        throws WSDLParserFault
+    ;
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns wsdlparse.ne.GetWSDLPortsResponse
+     * @throws WSDLParserFault
+     */
+    @WebMethod(operationName = "GetWSDLPorts", action = "ne.wsdlparse/GetWSDLPorts")
+    @WebResult(name = "GetWSDLPortsResponse", targetNamespace = "ne.wsdlparse", partName = "parameters")
+    public GetWSDLPortsResponse getWSDLPorts(
+        @WebParam(name = "GetWSDLPortsRequest", targetNamespace = "ne.wsdlparse", partName = "parameters")
+        GetWSDLPortsRequest parameters)
+        throws WSDLParserFault
+    ;
+
 }

@@ -2,7 +2,8 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/home/nour/IBM/IIBT10/WSDLParser/DM_LIB/WSDLParser.wsdl" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/WSDLParser.wsdl"/>
     <system systemId="file:/home/nour/IBM/IIBT10/WSDLParser/DM_LIB/WSDLParser_InlineSchema1.xsd" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/WSDLParser_InlineSchema1.xsd"/>
-    <system systemId="file:/home/nour/NetBeansProjects/WSDLParser/src/conf/xml-resources/web-services/WSDLParserService/wsdl/WSDLParser.wsdl" uri="src/conf/xml-resources/web-services/WSDLParserService/wsdl/WSDLParser.wsdl"/>
+    <system systemId="file:/home/nour/NetBeansProjects/WSDLParser/src/conf/xml-resources/web-services/WSDLParserService/wsdl/WSDLParser.wsdl" uri="src/conf/xml-resources/web-service-references/WSDLParser/wsdl/WSDLParser.wsdl"/>
+    <system systemId="file:/home/nour/NetBeansProjects/WSDLParser/src/conf/xml-resources/web-services/WSDLParserService/wsdl/WSDLParser_InlineSchema1.xsd" uri="src/conf/xml-resources/web-service-references/WSDLParser/wsdl/WSDLParser_InlineSchema1.xsd"/>
     <system systemId="file:/home/nour/NetBeansProjects/WSDLParser/web/WEB-INF/wsdl/WSDLParser.wsdl" uri="src/conf/xml-resources/web-services/WSDLParserService/wsdl/WSDLParser.wsdl"/>
     <system systemId="file:/home/nour/NetBeansProjects/WSDLParser/web/WEB-INF/wsdl/WSDLParser_InlineSchema1.xsd" uri="src/conf/xml-resources/web-services/WSDLParserService/wsdl/WSDLParser_InlineSchema1.xsd"/>
 </catalog>
