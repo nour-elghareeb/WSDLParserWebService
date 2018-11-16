@@ -26,7 +26,6 @@ public class ESQLSetterLine extends ESQLLine {
         switch (this.source) {
         case OUTPUT:
             return this.generateOutputBlock(useColors);
-
         case INPUT:
             return this.generateInputSetters(useColors);
         }
@@ -37,19 +36,21 @@ public class ESQLSetterLine extends ESQLLine {
         String pathWithoutPrefix = Utils.replacePrefixesWithAsterisk(this.xPath);
         String varname = Utils.splitPrefixes(this.xPath.substring(xPath.lastIndexOf(".") + 1))[1];
         String placeholder = "DECLARE %s %s %s.XMLNSC.%s; %s";
+        
+        String esqlType = this.useReference ? "REFERENCE TO"
+                            : this.xsdType.equals(XSDSimpleElementType.UNION_CHILDREN) ? "REFERENCE TO"
+                                    : this.xsdType.name();
         if (useColors)
             // TODO: add coloring
             return String.format(Locale.getDefault(), placeholder,
                     ConsoleStyle.addTextColor(varname, ConsoleStyle.Color.YELLOW),
-                    ConsoleStyle.addTextColor(this.useReference ? "REFERENCE TO"
-                            : (this.xsdType.equals(XSDSimpleElementType.UNION_CHILDREN) ? "REFERENCE TO"
-                                    : this.xsdType.name()),
+                    ConsoleStyle.addTextColor(esqlType,
                             ConsoleStyle.Color.PURPLE),
                     ConsoleStyle.addTextColor(this.source.get(), ConsoleStyle.Color.GREEN),
                     ConsoleStyle.addTextColor(pathWithoutPrefix, ConsoleStyle.Color.BLUE),
                     ConsoleStyle.addTextColor("-- " + this.xsdType.getDesc(), ConsoleStyle.Color.LIGHT_GRAY));
         else
-            return String.format(Locale.getDefault(), placeholder, varname, this.xsdType.name(), this.source.get(),
+            return String.format(Locale.getDefault(), placeholder, varname, esqlType, this.source.get(),
                     pathWithoutPrefix, "-- " + this.xsdType.getDesc());
     }
 
@@ -75,7 +76,7 @@ public class ESQLSetterLine extends ESQLLine {
     // }
 
     private String generateOutputBlock(boolean useColors) {
-        String placeholder = "SET %s.XMLNSC.%s = %s %s;";
+        String placeholder = "SET %s.XMLNSC.%s = %s; %s";
         if (useColors) {
             // TODO: add color
             return String.format(Locale.getDefault(), placeholder,
@@ -84,7 +85,7 @@ public class ESQLSetterLine extends ESQLLine {
                     ConsoleStyle.addTextColor(this.defaultValue, ConsoleStyle.Color.YELLOW),
                     ConsoleStyle.addTextColor("-- " + this.xsdType.getDesc(), ConsoleStyle.Color.LIGHT_GRAY));
         } else
-            return String.format(Locale.getDefault(), placeholder, this.source.get(), this.xPath,
+            return String.format(Locale.getDefault(), placeholder, this.source.get(), this.xPath, this.defaultValue,
                     " -- " + this.xsdType.getDesc());
     }
 

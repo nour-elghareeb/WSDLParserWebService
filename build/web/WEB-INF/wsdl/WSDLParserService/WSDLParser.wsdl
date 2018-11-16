@@ -14,7 +14,17 @@
     </wsdl:message>
     <wsdl:message name="UploadFileResponse">
         <wsdl:part element="tns:UploadFileResponse" name="parameters" />
-    </wsdl:message>   
+    </wsdl:message>
+    
+    
+    <wsdl:message name="GetServiceNamesRequest">
+        <wsdl:part element="tns:GetServiceNamesRequest" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetServiceNamesResponse">
+        <wsdl:part element="tns:GetServiceNamesResponse" name="parameters" />
+    </wsdl:message>
+    
+    
     <wsdl:message name="GetAvailableWSDLsRequest">
         <wsdl:part element="tns:GetAvailableWSDLsRequest" name="parameters" />
     </wsdl:message>
@@ -26,14 +36,26 @@
     </wsdl:message>
     <wsdl:message name="GetWSDLPortsResponse">
         <wsdl:part element="tns:GetWSDLPortsResponse" name="parameters" />
-    </wsdl:message>
-    
+    </wsdl:message>    
     <wsdl:message name="GetWSDLOperationsRequest">
         <wsdl:part element="tns:GetWSDLOperationsRequest" name="parameters" />
     </wsdl:message>
     <wsdl:message name="GetWSDLOperationsResponse">
         <wsdl:part element="tns:GetWSDLOperationsResponse" name="parameters" />
     </wsdl:message>
+    <wsdl:message name="GetWSDLOperationMessagesRequest">
+        <wsdl:part element="tns:GetWSDLOperationMessagesRequest" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetWSDLOperationMessagesResponse">
+        <wsdl:part element="tns:GetWSDLOperationMessagesResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetWSDLOperationMessageAsESQLRequest">
+        <wsdl:part element="tns:GetWSDLOperationMessageAsESQLRequest" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetWSDLOperationMessageAsESQLResponse">
+        <wsdl:part element="tns:GetWSDLOperationMessageAsESQLResponse" name="parameters" />
+    </wsdl:message>
+    
     <wsdl:message name="WSDLParserFault">
         <wsdl:part name="parameters" element="tns:WSDLParserFaultDetails"></wsdl:part>
     </wsdl:message>
@@ -43,9 +65,16 @@
             <wsdl:output message="tns:UploadFileResponse" name="UploadFileResponse" />
             <wsdl:fault message="tns:WSDLParserFault" name="WSDLParserFault"></wsdl:fault>
         </wsdl:operation>
+        
         <wsdl:operation name="GetAvailableWSDLs">
             <wsdl:input message="tns:GetAvailableWSDLsRequest" name="GetAvailableWSDLsRequest"/>
             <wsdl:output message="tns:GetAvailableWSDLsResponse" name="GetAvailableWSDLsResponse" />
+            <wsdl:fault message="tns:WSDLParserFault" name="WSDLParserFault"></wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="GetServiceNames">
+            <wsdl:input message="tns:GetServiceNamesRequest" name="GetServiceNamesRequest"/>
+            <wsdl:output message="tns:GetServiceNamesResponse" name="GetServiceNamesResponse" />
             <wsdl:fault message="tns:WSDLParserFault" name="WSDLParserFault"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="GetWSDLPorts">
@@ -56,6 +85,16 @@
         <wsdl:operation name="GetWSDLOperations">
             <wsdl:input message="tns:GetWSDLOperationsRequest" name="GetWSDLOperationsRequest"/>
             <wsdl:output message="tns:GetWSDLOperationsResponse" name="GetWSDLOperationsResponse" />
+            <wsdl:fault message="tns:WSDLParserFault" name="WSDLParserFault"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetWSDLOperationMessageAsESQL">
+            <wsdl:input message="tns:GetWSDLOperationMessageAsESQLRequest" name="GetWSDLOperationMessageAsESQLRequest"/>
+            <wsdl:output message="tns:GetWSDLOperationMessageAsESQLResponse" name="GetWSDLOperationMessageAsESQLResponse" />
+            <wsdl:fault message="tns:WSDLParserFault" name="WSDLParserFault"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetWSDLOperationMessages">
+            <wsdl:input message="tns:GetWSDLOperationMessagesRequest" name="GetWSDLOperationMessagesRequest"/>
+            <wsdl:output message="tns:GetWSDLOperationMessagesResponse" name="GetWSDLOperationMessagesResponse" />
             <wsdl:fault message="tns:WSDLParserFault" name="WSDLParserFault"></wsdl:fault>
         </wsdl:operation>
     </wsdl:portType>
@@ -73,6 +112,20 @@
                 <soap:fault name="WSDLParserFault" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
+        
+        <wsdl:operation name="GetServiceNames">
+            <soap:operation soapAction="ne.wsdlparse/GetServiceNames"/>
+            <wsdl:input name="GetServiceNamesRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetServiceNamesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="WSDLParserFault">
+                <soap:fault name="WSDLParserFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
         <wsdl:operation name="GetAvailableWSDLs">
             <soap:operation soapAction="ne.wsdlparse/GetAvailableWSDLs"/>
             <wsdl:input name="GetAvailableWSDLsRequest">
@@ -97,7 +150,6 @@
                 <soap:fault name="WSDLParserFault" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
-        
         <wsdl:operation name="GetWSDLOperations">
             <soap:operation soapAction="ne.wsdlparse/GetWSDLOperations"/>
             <wsdl:input name="GetWSDLOperationsRequest">
@@ -110,10 +162,34 @@
                 <soap:fault name="WSDLParserFault" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="GetWSDLOperationMessages">
+            <soap:operation soapAction="ne.wsdlparse/GetWSDLOperationMessages"/>
+            <wsdl:input name="GetWSDLOperationMessagesRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetWSDLOperationMessagesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="WSDLParserFault">
+                <soap:fault name="WSDLParserFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetWSDLOperationMessageAsESQL">
+            <soap:operation soapAction="ne.wsdlparse/GetWSDLOperationMessageAsESQL"/>
+            <wsdl:input name="GetWSDLOperationMessageAsESQLRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetWSDLOperationMessageAsESQLResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="WSDLParserFault">
+                <soap:fault name="WSDLParserFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="WSDLParser">
         <wsdl:port binding="tns:WSDLParserSOAP" name="WSDLParserSOAP">
-            <soap:address location="http://localhsot:8000"/>
+            <soap:address location="http://nour-Lenovo-ideapad-500-15ISK:8080/WSDLParser/WSDLParser"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

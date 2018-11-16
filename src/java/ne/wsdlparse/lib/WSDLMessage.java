@@ -23,10 +23,10 @@ public class WSDLMessage {
     protected String prefix;
     public ArrayList<XSDElement> parts = new ArrayList<XSDElement>();
     protected Node node;
-    protected Operation operation;
+    protected WSDLOperation operation;
     protected WSDLProperty encodingStyle;
 
-    public WSDLMessage(WSDLManagerRetrieval manager, Operation operation, Node node)
+    public WSDLMessage(WSDLManagerRetrieval manager, WSDLOperation operation, Node node)
             throws XPathExpressionException, WSDLException, SAXException, IOException, ParserConfigurationException {
         this.manager = manager;
         this.node = node;
@@ -37,7 +37,7 @@ public class WSDLMessage {
         }
     }
 
-    public WSDLMessage(WSDLManagerRetrieval manager2, Operation operation2) {
+    public WSDLMessage(WSDLManagerRetrieval manager2, WSDLOperation operation2) {
     }
 
     /**
@@ -209,16 +209,16 @@ public class WSDLMessage {
     }
 
     /**
-     * @return Operation return the operation
+     * @return WSDLOperation return the operation
      */
-    public Operation getOperation() {
+    public WSDLOperation getOperation() {
         return operation;
     }
 
     /**
      * @param operation the operation to set
      */
-    public void setOperation(Operation operation) {
+    public void setOperation(WSDLOperation operation) {
         this.operation = operation;
     }
 

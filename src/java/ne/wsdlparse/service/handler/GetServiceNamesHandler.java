@@ -9,20 +9,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ne.utility.CompressionUtils;
 import ne.utility.FileUtils;
-import ne.wsdlparse.lib.Port;
 import ne.wsdlparse.lib.Service;
-import ne.wsdlparse.lib.WSDLManager;
 import ne.wsdlparse.lib.exception.WSDLException;
 import ne.wsdlparse.service.lib.WSDLParserService;
-import wsdlparse.ne.GetAvailableWSDLsRequest;
-import wsdlparse.ne.GetAvailableWSDLsResponse;
-import wsdlparse.ne.GetWSDLPortsRequest;
-import wsdlparse.ne.GetWSDLPortsResponse;
+import wsdlparse.ne.GetServiceNamesRequest;
+import wsdlparse.ne.GetServiceNamesResponse;
 
 import wsdlparse.ne.UploadFileRequest;
 import wsdlparse.ne.UploadFileResponse;
@@ -33,23 +29,22 @@ import wsdlparse.ne.WSDLParserFaultDetails;
  *
  * @author nour
  */
-public class GetWSDLPortsHandler extends ServiceHandler<GetWSDLPortsRequest, GetWSDLPortsResponse> {
+public class GetServiceNamesHandler extends ServiceHandler<GetServiceNamesRequest, GetServiceNamesResponse> {
+
+    private final static File EXTRACTING_DIR = new File(TEMP_DIR, "extracted");
 
     @Override
-    public GetWSDLPortsResponse handle(GetWSDLPortsRequest request) throws WSDLParserFault {
+    public GetServiceNamesResponse handle(GetServiceNamesRequest request) throws WSDLParserFault {
         try {
-            GetWSDLPortsResponse response = new GetWSDLPortsResponse();
-            List<String> ports = response.getWSDLPortItem();
+            GetServiceNamesResponse response = new GetServiceNamesResponse();
             loadWSDL(request.getWSDLName());
-            Service service = manager.loadService(request.getServiceName());
-            
-            for (Port port : service.loadPorts()) {
-                ports.add(port.getName());
+            this.manager.loadServices();
+            for (Service service : this.manager.getServices()){
+                response.getService().add(service.getName());
             }
-            
             return response;
         } catch (WSDLException ex) {
-            Logger.getLogger(GetWSDLPortsHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GetServiceNamesHandler.class.getName()).log(Level.SEVERE, null, ex);
             throw handleFault(ex.getCode().ordinal(), ex.getMessage());
         }
     }

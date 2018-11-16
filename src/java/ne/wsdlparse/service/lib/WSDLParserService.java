@@ -6,6 +6,10 @@
 package ne.wsdlparse.service.lib;
 
 import javax.jws.WebService;
+import ne.wsdlparse.service.handler.GetAvailableWSDLsHandler;
+import ne.wsdlparse.service.handler.GetServiceNamesHandler;
+import ne.wsdlparse.service.handler.GetWSDLOpeartionMessageAsESQLHandler;
+import ne.wsdlparse.service.handler.GetWSDLOpeartionMessagesHandler;
 import ne.wsdlparse.service.handler.GetWSDLOperationsHandler;
 import ne.wsdlparse.service.handler.GetWSDLPortsHandler;
 import ne.wsdlparse.service.handler.UploadFileHandler;
@@ -24,9 +28,16 @@ public class WSDLParserService {
         return handler.handle(parameters);
     }
 
+    public wsdlparse.ne.GetServiceNamesResponse getServiceNames(wsdlparse.ne.GetServiceNamesRequest parameters) throws WSDLParserFault {
+        //TODO implement this method
+        GetServiceNamesHandler handler = new GetServiceNamesHandler();
+        return handler.handle(parameters);
+    }
+
     public wsdlparse.ne.GetAvailableWSDLsResponse getAvailableWSDLs(wsdlparse.ne.GetAvailableWSDLsRequest parameters) throws WSDLParserFault {
         //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        GetAvailableWSDLsHandler handler = new GetAvailableWSDLsHandler();
+        return handler.handle(parameters);
     }
 
     public wsdlparse.ne.GetWSDLPortsResponse getWSDLPorts(wsdlparse.ne.GetWSDLPortsRequest parameters) throws WSDLParserFault {
@@ -37,8 +48,20 @@ public class WSDLParserService {
 
     public wsdlparse.ne.GetWSDLOperationsResponse getWSDLOperations(wsdlparse.ne.GetWSDLOperationsRequest parameters) throws WSDLParserFault {
         //TODO implement this method
-        GetWSDLOperationsHandler handler = new  GetWSDLOperationsHandler();
+        GetWSDLOperationsHandler handler = new GetWSDLOperationsHandler();
         return handler.handle(parameters);
     }
-    
+
+    public wsdlparse.ne.GetWSDLOperationMessagesResponse getWSDLOperationMessages(wsdlparse.ne.GetWSDLOperationMessagesRequest parameters) throws WSDLParserFault {
+        //TODO implement this method
+        GetWSDLOpeartionMessagesHandler handler = new GetWSDLOpeartionMessagesHandler();
+        return handler.handle(parameters);
+    }
+
+    public wsdlparse.ne.GetWSDLOperationMessageAsESQLResponse getWSDLOperationMessageAsESQL(wsdlparse.ne.GetWSDLOperationMessageAsESQLRequest parameters) throws WSDLParserFault {
+        //TODO implement this method
+        GetWSDLOpeartionMessageAsESQLHandler handler = new GetWSDLOpeartionMessageAsESQLHandler();
+        return handler.handle(parameters);
+    }
+
 }

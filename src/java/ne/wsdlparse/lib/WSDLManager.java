@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,6 +30,7 @@ import org.xml.sax.SAXException;
 import ne.wsdlparse.lib.esql.ESQLBlock;
 import ne.wsdlparse.lib.esql.ESQLManager;
 import ne.wsdlparse.lib.exception.WSDLException;
+import ne.wsdlparse.lib.exception.WSDLExceptionCode;
 import ne.wsdlparse.lib.xsd.XSDManager;
 
 public class WSDLManager implements WSDLManagerRetrieval {
@@ -98,8 +102,7 @@ public class WSDLManager implements WSDLManagerRetrieval {
         this.wsdl = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new FileInputStream(file));
         this.xPath = XPathFactory.newInstance().newXPath();
         this.loadNamespaces();
-        this.loadSchema();
-        this.loadServices();
+//        this.loadServices();
         System.out.println("Done");
 
     }
@@ -113,19 +116,35 @@ public class WSDLManager implements WSDLManagerRetrieval {
 
         return true;
     }
-
-    private void loadServices() throws XPathExpressionException {
-        final NodeList ports = (NodeList) this.getXPath().compile("/definitions/service").evaluate(this.getWSDLFile(),
-                XPathConstants.NODESET);
-        this.services = new ArrayList<Service>() {
-            {
-                for (int i = 0; i < ports.getLength(); i++) {
-                    Node serviceNode = ports.item(i);
-                    Service port = new Service(WSDLManager.this, serviceNode);
-                    add(port);
+    
+    public void loadServices() throws WSDLException {
+        try {
+            final NodeList services = (NodeList) this.getXPath().compile("/definitions/service").evaluate(this.getWSDLFile(),
+                    XPathConstants.NODESET);
+            this.services = new ArrayList<Service>() {
+                {
+                    for (int i = 0; i < services.getLength(); i++) {
+                        Node serviceNode = services.item(i);
+                        Service service = new Service(WSDLManager.this, serviceNode);
+                        add(service);
+                    }
                 }
-            }
-        };
+            };
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(WSDLManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new WSDLException(WSDLExceptionCode.WSDL_PARSING_EXCEPTION);
+        }
+    }
+    public Service loadService(String serviceName) throws WSDLException {
+        try {
+            final Node node = (Node) this.getXPath().compile(String.format(Locale.getDefault(), "/definitions/service[@name='%s']", serviceName)).evaluate(this.getWSDLFile(),
+                    XPathConstants.NODE);
+            if (node == null) throw new WSDLException(WSDLExceptionCode.WSDL_PARSING_EXCEPTION, "No service found with this name!");
+            return new Service(WSDLManager.this, node);
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(WSDLManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new WSDLException(WSDLExceptionCode.WSDL_PARSING_EXCEPTION);
+        }
     }
 
     public ArrayList<Service> getServices() {
@@ -143,10 +162,20 @@ public class WSDLManager implements WSDLManagerRetrieval {
         return this.wsdl;
     }
 
-    public XSDManager getXSDManager() { // if (!schemas.containsKey(namespace))
-        // if (!this.loadSchema(namespace))
-        // return null;
-        // return this.schemas.get(namespace);
+    /**
+     *
+     * @return
+     * @throws ParserConfigurationException
+     * @throws XPathExpressionException
+     * @throws SAXException
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws WSDLException
+     */
+    @Override
+    public XSDManager getXSDManager() throws ParserConfigurationException, XPathExpressionException, SAXException, IOException, FileNotFoundException, WSDLException {
+
+        if (this.xsdManager == null) this.loadSchema();
         return this.xsdManager;
     }
 
@@ -179,5 +208,7 @@ public class WSDLManager implements WSDLManagerRetrieval {
         }
         return prefix;
     }
+
+    
 
 }

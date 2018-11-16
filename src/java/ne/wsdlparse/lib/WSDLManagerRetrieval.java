@@ -1,5 +1,6 @@
 package ne.wsdlparse.lib;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,12 +11,13 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import ne.wsdlparse.lib.esql.ESQLManager;
+import ne.wsdlparse.lib.exception.WSDLException;
 import ne.wsdlparse.lib.xsd.XSDManager;
 
 public interface WSDLManagerRetrieval {
     Document getWSDLFile();
 
-    XSDManager getXSDManager() throws XPathExpressionException, SAXException, IOException, ParserConfigurationException;
+    XSDManager getXSDManager()throws ParserConfigurationException, XPathExpressionException, SAXException, IOException, FileNotFoundException, WSDLException ;
 
     XPath getXPath();
 

@@ -75,7 +75,7 @@ public class ESQLManager {
             line = new ESQLSetterLine(String.join(".", this.paramTree), type, defaultValue);
         else
             line = new ESQLSetterLine("".concat(
-                    String.join(".", this.paramTree).concat(".").concat(Utils.getParamWithPrefix(prefix, param))),
+                    String.join(".", this.paramTree).concat(".").concat(Utils.getParamWithPrefix(prefix, param).trim())),
                     type, defaultValue);
         this.block.addLine(line);
     }

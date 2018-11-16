@@ -30,6 +30,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetWSDLOperationMessagesResponse }
+     * 
+     */
+    public GetWSDLOperationMessagesResponse createGetWSDLOperationMessagesResponse() {
+        return new GetWSDLOperationMessagesResponse();
+    }
+
+    /**
      * Create an instance of {@link UploadFileRequest }
      * 
      */
@@ -62,6 +70,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetServiceNamesRequest }
+     * 
+     */
+    public GetServiceNamesRequest createGetServiceNamesRequest() {
+        return new GetServiceNamesRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetServiceNamesResponse }
+     * 
+     */
+    public GetServiceNamesResponse createGetServiceNamesResponse() {
+        return new GetServiceNamesResponse();
+    }
+
+    /**
      * Create an instance of {@link GetWSDLPortsRequest }
      * 
      */
@@ -91,6 +115,38 @@ public class ObjectFactory {
      */
     public GetWSDLOperationsResponse createGetWSDLOperationsResponse() {
         return new GetWSDLOperationsResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetWSDLOperationMessagesRequest }
+     * 
+     */
+    public GetWSDLOperationMessagesRequest createGetWSDLOperationMessagesRequest() {
+        return new GetWSDLOperationMessagesRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetWSDLOperationMessagesResponse.WSDLOperationMessage }
+     * 
+     */
+    public GetWSDLOperationMessagesResponse.WSDLOperationMessage createGetWSDLOperationMessagesResponseWSDLOperationMessage() {
+        return new GetWSDLOperationMessagesResponse.WSDLOperationMessage();
+    }
+
+    /**
+     * Create an instance of {@link GetWSDLOperationMessageAsESQLRequest }
+     * 
+     */
+    public GetWSDLOperationMessageAsESQLRequest createGetWSDLOperationMessageAsESQLRequest() {
+        return new GetWSDLOperationMessageAsESQLRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetWSDLOperationMessageAsESQLResponse }
+     * 
+     */
+    public GetWSDLOperationMessageAsESQLResponse createGetWSDLOperationMessageAsESQLResponse() {
+        return new GetWSDLOperationMessageAsESQLResponse();
     }
 
     /**

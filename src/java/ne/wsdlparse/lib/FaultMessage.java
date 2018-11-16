@@ -13,7 +13,7 @@ import ne.wsdlparse.lib.xsd.XSDElement;
 import ne.wsdlparse.lib.xsd.constant.XSDSimpleElementType;
 
 public class FaultMessage extends WSDLMessage {
-    public FaultMessage(WSDLManagerRetrieval manager, Operation operation, Node node)
+    public FaultMessage(WSDLManagerRetrieval manager, WSDLOperation operation, Node node)
             throws XPathExpressionException, WSDLException, SAXException, IOException, ParserConfigurationException {
         super(manager, operation, node);
     }

@@ -42,6 +42,21 @@ public interface WSDLParser {
      * 
      * @param parameters
      * @return
+     *     returns wsdlparse.ne.GetServiceNamesResponse
+     * @throws WSDLParserFault
+     */
+    @WebMethod(operationName = "GetServiceNames", action = "ne.wsdlparse/GetServiceNames")
+    @WebResult(name = "GetServiceNamesResponse", targetNamespace = "ne.wsdlparse", partName = "parameters")
+    public GetServiceNamesResponse getServiceNames(
+        @WebParam(name = "GetServiceNamesRequest", targetNamespace = "ne.wsdlparse", partName = "parameters")
+        GetServiceNamesRequest parameters)
+        throws WSDLParserFault
+    ;
+
+    /**
+     * 
+     * @param parameters
+     * @return
      *     returns wsdlparse.ne.GetAvailableWSDLsResponse
      * @throws WSDLParserFault
      */
@@ -80,6 +95,36 @@ public interface WSDLParser {
     public GetWSDLOperationsResponse getWSDLOperations(
         @WebParam(name = "GetWSDLOperationsRequest", targetNamespace = "ne.wsdlparse", partName = "parameters")
         GetWSDLOperationsRequest parameters)
+        throws WSDLParserFault
+    ;
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns wsdlparse.ne.GetWSDLOperationMessagesResponse
+     * @throws WSDLParserFault
+     */
+    @WebMethod(operationName = "GetWSDLOperationMessages", action = "ne.wsdlparse/GetWSDLOperationMessages")
+    @WebResult(name = "GetWSDLOperationMessagesResponse", targetNamespace = "ne.wsdlparse", partName = "parameters")
+    public GetWSDLOperationMessagesResponse getWSDLOperationMessages(
+        @WebParam(name = "GetWSDLOperationMessagesRequest", targetNamespace = "ne.wsdlparse", partName = "parameters")
+        GetWSDLOperationMessagesRequest parameters)
+        throws WSDLParserFault
+    ;
+
+    /**
+     * 
+     * @param parameters
+     * @return
+     *     returns wsdlparse.ne.GetWSDLOperationMessageAsESQLResponse
+     * @throws WSDLParserFault
+     */
+    @WebMethod(operationName = "GetWSDLOperationMessageAsESQL", action = "ne.wsdlparse/GetWSDLOperationMessageAsESQL")
+    @WebResult(name = "GetWSDLOperationMessageAsESQLResponse", targetNamespace = "ne.wsdlparse", partName = "parameters")
+    public GetWSDLOperationMessageAsESQLResponse getWSDLOperationMessageAsESQL(
+        @WebParam(name = "GetWSDLOperationMessageAsESQLRequest", targetNamespace = "ne.wsdlparse", partName = "parameters")
+        GetWSDLOperationMessageAsESQLRequest parameters)
         throws WSDLParserFault
     ;
 

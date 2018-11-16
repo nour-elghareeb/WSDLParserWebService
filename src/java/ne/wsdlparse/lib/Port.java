@@ -11,7 +11,6 @@ import org.w3c.dom.NodeList;
 
 public class Port {
     private String name;
-    private ArrayList<Operation> operations;
     private WSDLManagerRetrieval manager;
     private PortType type;
     private Binding binding;
@@ -30,10 +29,6 @@ public class Port {
 
     public String getName() {
         return this.name;
-    }
-
-    public ArrayList<Operation> getOperations() {
-        return this.operations;
     }
 
     public void setType(String typeName) throws XPathExpressionException {

@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import ne.utility.CompressionUtils;
 import ne.utility.FileUtils;
-import ne.wsdlparse.lib.Operation;
+import ne.wsdlparse.lib.WSDLOperation;
 import ne.wsdlparse.lib.Port;
 import ne.wsdlparse.lib.Service;
 import ne.wsdlparse.lib.WSDLManager;
@@ -42,32 +42,17 @@ public class GetWSDLOperationsHandler extends ServiceHandler<GetWSDLOperationsRe
     public GetWSDLOperationsResponse handle(GetWSDLOperationsRequest request) throws WSDLParserFault {
         GetWSDLOperationsResponse response = new GetWSDLOperationsResponse();
         List<String> operations = response.getWSDLOperationName();
-        File dir = new File(WORKING_DIR, request.getWSDLName());
-        File wsdl = null;
-        
-        for (File file : dir.listFiles()) {
-            if (file.getName().endsWith(".wsdl")) {
-                wsdl = file;
-                break;
-            }
-        }
-        if (wsdl == null) {
-            throw handleFault(1001, "Could not load wsdl file!");
-        }
+        loadWSDL(request.getWSDLName());
         try {
-            WSDLManager manager = new WSDLManager(wsdl.getAbsolutePath());
-            Service service = manager.getServices().get(0);
-            Port port = service.getPort(request.getWSDLPortName());
-            if (port == null) throw handleFault(1002, "Port could not be found in the wsdl file!");
-            for (Operation op : port.getType().getOperations()){
+            Service service = manager.loadService(request.getServiceName());
+            Port port = service.loadPort(request.getWSDLPortName());
+            
+            for (WSDLOperation op : port.getType().loadOperations()) {
                 operations.add(op.getName());
             }
-        } catch (WSDLParserFault ex) {
-            throw ex;
-        } catch (WSDLException ex) {        
+        } catch (WSDLException ex) {
+            Logger.getLogger(GetWSDLOperationsHandler.class.getName()).log(Level.SEVERE, null, ex);
             throw handleFault(ex.getCode().ordinal(), ex.getMessage());
-        } catch (Exception ex) {
-            throw handleFault(9999, ex.getMessage());
         }
 
         return response;
